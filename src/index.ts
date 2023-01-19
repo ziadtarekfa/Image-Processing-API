@@ -12,13 +12,13 @@ app.get('/images', (req: express.Request, res: express.Response) => {
     const fileName = req.query.filename as string;
 
     if (Number.isNaN(width) || Number.isNaN(height) || fileName == undefined) {
-        res.send("The URL is not correctly formatted");
+        res.status(400).send("The URL is not correctly formatted");
     }
     else if (height <= 0 || width <= 0) {
-        res.send("Height and Width must be a positive number");
+        res.status(400).send("Height and Width must be a positive number");
     }
     else if (!checkIfFileNameExists(fileName)) {
-        res.send("Image does not exist");
+        res.status(404).send("Image does not exist");
     }
     // check if file exists in cache
     const thumbPath = Path.join(__dirname, `../images/thumbs/${fileName}_${width}_${height}.jpg`);
@@ -30,7 +30,7 @@ app.get('/images', (req: express.Request, res: express.Response) => {
     else {
         // Resize file and save it to cache
         sharp(path).resize(width, height).toFile(`./images/thumbs/${fileName}_${width}_${height}.jpg`, () => {
-            res.sendFile(thumbPath);
+            res.status(200).sendFile(thumbPath);
         });
 
     }
@@ -50,3 +50,5 @@ const checkIfFileNameExists = (fileName: string): boolean => {
 app.listen(3000, () => {
     console.log("Listening for requests");
 });
+
+export default app;
