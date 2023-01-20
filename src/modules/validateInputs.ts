@@ -10,9 +10,11 @@ const validateInputs = (req: express.Request, res: express.Response, next: expre
 
     if (Number.isNaN(width) || Number.isNaN(height) || fileName == undefined) {
         res.status(400).send("The URL is not correctly formatted");
+        return;
     }
     else if (height <= 0 || width <= 0) {
         res.status(400).send("Height and Width must be a positive number");
+        return;
     }
 
     const imagePath = Path.join(__dirname, `../../images/${fileName}.jpg`);

@@ -11,9 +11,11 @@ const validateInputs = (req, res, next) => {
     const fileName = req.query.filename;
     if (Number.isNaN(width) || Number.isNaN(height) || fileName == undefined) {
         res.status(400).send("The URL is not correctly formatted");
+        return;
     }
     else if (height <= 0 || width <= 0) {
         res.status(400).send("Height and Width must be a positive number");
+        return;
     }
     const imagePath = path_1.default.join(__dirname, `../../images/${fileName}.jpg`);
     const imageExists = fs_1.default.existsSync(imagePath);
