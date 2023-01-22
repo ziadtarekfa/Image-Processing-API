@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,7 +16,7 @@ const supertest_1 = __importDefault(require("supertest"));
 const resizeImage_1 = __importDefault(require("../modules/resizeImage"));
 const server_1 = __importDefault(require("../server"));
 const path_1 = __importDefault(require("path"));
-const fs_1 = __importStar(require("fs"));
+const fs_1 = require("fs");
 const request = (0, supertest_1.default)(server_1.default);
 describe("validate inputs", () => {
     it("checks if image exists", () => __awaiter(void 0, void 0, void 0, function* () {
@@ -62,7 +39,7 @@ describe("validate inputs", () => {
 it("checks if the resizing functionality work", () => __awaiter(void 0, void 0, void 0, function* () {
     const thumbPath = path_1.default.join(__dirname, `../../images/thumbs/palmtunnel_200_200.jpg`);
     if ((0, fs_1.existsSync)(thumbPath)) {
-        fs_1.default.unlinkSync(thumbPath);
+        (0, fs_1.unlinkSync)(thumbPath);
     }
     const imagePath = path_1.default.join(__dirname, `../../images/palmtunnel.jpg`);
     (0, resizeImage_1.default)("palmtunnel", 200, 200).then(() => {
