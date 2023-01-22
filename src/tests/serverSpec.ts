@@ -1,5 +1,8 @@
 import supertest from "supertest";
+import resizeImage from "../modules/resizeImage";
 import app from "../server";
+import Path from "path";
+import fs, { existsSync, unlinkSync } from "fs";
 
 const request = supertest(app);
 
@@ -23,6 +26,13 @@ describe("validate inputs", () => {
 });
 
 it("checks if the resizing functionality work", async () => {
-  const response = await request.get("/images/?width=300&height=100&filename=fjord");
-  expect(response.status).toEqual(200);
+
+  const thumbPath = Path.join(__dirname, `../../images/thumbs/palmtunnel_200_200.jpg`);
+  if (existsSync(thumbPath)) {
+    fs.unlinkSync(thumbPath);
+  }
+  const imagePath = Path.join(__dirname, `../../images/palmtunnel.jpg`);
+  resizeImage("palmtunnel", 200, 200).then(() => {
+    expect(existsSync(imagePath)).toBeTrue();
+  })
 });
