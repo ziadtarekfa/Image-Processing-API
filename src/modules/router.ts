@@ -7,7 +7,7 @@ import resizeImage from "./resizeImage";
 
 const router = Router();
 
-router.get("/", validateInputs, (req: express.Request, res: express.Response): void => {
+router.get("/", validateInputs, (_req: express.Request, res: express.Response): void => {
 
     const thumbPath = Path.join(__dirname,
         `../../images/thumbs/${res.locals.fileName}_${res.locals.width}_${res.locals.height}.jpg`);
